@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <IndexCarousel />
+    <IndexBanner />
+    <IndexInformation />
+    <IndexModule />
   </div>
 </template>
 
@@ -8,7 +11,10 @@
 export default {
   name: 'home',
   components: {
-    IndexCarousel: () => import('@c/IndexCarousel')
+    IndexCarousel: () => import('@c/IndexCarousel'),
+    IndexBanner: () => import('@c/IndexBanner'),
+    IndexInformation: () => import('@c/IndexInformation'),
+    IndexModule: () => import('@c/IndexModule')
   }
 }
 </script>

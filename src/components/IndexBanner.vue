@@ -1,18 +1,22 @@
 <template>
   <div class="banner">
-    <el-row>
-      <el-col :span="4" v-for="item in data" :key="item.description">
-        <el-row class="card">
-          <el-col :span="8" :style="{background: item.color}" class="icon">
-            <i :class="item.icon" />
-          </el-col>
-          <el-col :span="16" class="content">
-            <div><span class="number">{{ item.number }}</span></div>
-            <div><span class="description">{{ item.description }}</span></div>
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
+    <Row>
+      <Col :span="4" v-for="item in data" :key="item.description">
+        <Row class="card">
+          <Col :span="8" :style="{background: item.color}" class="icon">
+            <Icon :type="item.icon" />
+          </Col>
+          <Col :span="16" class="content">
+            <div>
+              <p class="number">{{ item.number }}</p>
+            </div>
+            <div>
+              <p class="description">{{ item.description }}</p>
+            </div>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
   </div>
 </template>
 
@@ -22,40 +26,40 @@ export default {
     return {
       data: {
         team: {
-          'number': 0,
-          'description': '团队数量',
-          'icon': 'el-icon-office-building',
-          'color': '#FDE9D9'
+          number: 0,
+          description: '团队数量',
+          icon: 'ios-people',
+          color: '#FDE9D9'
         },
         project: {
-          'number': 0,
-          'description': '项目数量',
-          'icon': 'el-icon-s-custom',
-          'color': '#DAEEF3'
+          number: 0,
+          description: '项目数量',
+          icon: 'md-albums',
+          color: '#DAEEF3'
         },
         variable: {
-          'number': 0,
-          'description': '变量数量',
-          'icon': 'el-icon-s-flag',
-          'color': '#F2DBDB'
+          number: 0,
+          description: '变量数量',
+          icon: 'md-flag',
+          color: '#F2DBDB'
         },
         keyword: {
-          'number': 0,
-          'description': '关键字数量',
-          'icon': 'el-icon-s-promotion',
-          'color': '#EAF1DD'
+          number: 0,
+          description: '关键字数量',
+          icon: 'md-paper-plane',
+          color: '#EAF1DD'
         },
         interface: {
-          'number': 0,
-          'description': '接口数量',
-          'icon': 'el-icon-s-ticket',
-          'color': '#C6D9F1'
+          number: 0,
+          description: '接口数量',
+          icon: 'md-outlet',
+          color: '#C6D9F1'
         },
         suite: {
-          'number': 0,
-          'description': '套件数量',
-          'icon': 'el-icon-s-grid',
-          'color': '#DDD9C3'
+          number: 0,
+          description: '套件数量',
+          icon: 'md-grid',
+          color: '#DDD9C3'
         }
       }
     }
@@ -89,6 +93,8 @@ export default {
             }
           }
         }).catch((res) => {
+          console.log(res)
+
           this.$message({
             type: 'error',
             message: '服务异常，请联系管理员！',
@@ -102,7 +108,7 @@ export default {
 
 <style scoped>
 .banner {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   padding-top: 20px;
   padding-bottom: 20px;
   margin-left: -20px;
@@ -125,17 +131,19 @@ export default {
 
 .content {
   border-radius: 0 5px 5px 0;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .number {
   font-size: 48px;
   line-height: 70px;
+  text-align: center;
 }
 
 .description {
   font-size: 14px;
   line-height: 30px;
-  background-color: #FFFFFF;
+  text-align: center;
+  background-color: #ffffff;
 }
 </style>

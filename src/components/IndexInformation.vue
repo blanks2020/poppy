@@ -1,22 +1,39 @@
 <template>
   <div class="banner">
-    <el-row>
+    <Row>
+      <Col :span="8" v-for="item in data" :key="item.title">
+        <Row class="card">
+          <Col :span="12" class="background">
+            <img :src="item.image" :alt="item.title" class="image" />
+          </Col>
+          <Col :span="12" class="content">
+            <div>
+              <span class="description">{{ item.version || item.name }}</span>
+            </div>
+            <div>
+              <span class="number">{{ item.title }}</span>
+            </div>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+    <!-- <el-row>
       <el-col :span="8" v-for="item in data" :key="item.title">
         <el-row class="card">
           <el-col :span="12" class="background">
-            <el-image
-              :src="item.image"
-              :alt="item.title"
-              class="image"
-            />
+            <el-image :src="item.image" :alt="item.title" class="image" />
           </el-col>
           <el-col :span="12" class="content">
-            <div><span class="description">{{ item.version || item.name }}</span></div>
-            <div><span class="number">{{ item.title }}</span></div>
+            <div>
+              <span class="description">{{ item.version || item.name }}</span>
+            </div>
+            <div>
+              <span class="number">{{ item.title }}</span>
+            </div>
           </el-col>
         </el-row>
       </el-col>
-    </el-row>
+    </el-row>-->
   </div>
 </template>
 
@@ -26,19 +43,19 @@ export default {
     return {
       data: {
         clover: {
-          'title': 'clover',
-          'version': '0.1.0',
-          'image': require('assets/img/info-clover.jpg')
+          title: 'clover',
+          version: '0.1.0',
+          image: require('@img/info-clover.jpg')
         },
         python: {
-          'title': 'python',
-          'version': '3.6',
-          'image': require('assets/img/info-python.jpg')
+          title: 'python',
+          version: '3.6',
+          image: require('@img/info-python.jpg')
         },
         platform: {
-          'title': 'platform',
-          'name': 'linux',
-          'image': require('assets/img/info-platform.jpg')
+          title: 'platform',
+          name: 'linux',
+          image: require('@img/info-platform.jpg')
         }
       }
     }
@@ -58,17 +75,17 @@ export default {
             this.data.platform.name = res.data.data.platform
             // 这里根据不同操作系统类型适配不同图标。
             if (this.data.platform.name === 'darwin') {
-              this.data.platform.image = require('assets/img/info-platform-apple.jpg')
+              this.data.platform.image = require('@img/info-platform-apple.jpg')
             } else if (this.data.platform.name === 'windows') {
-              this.data.platform.image = require('assets/img/info-platform-windows.jpg')
+              this.data.platform.image = require('@img/info-platform-windows.jpg')
             } else if (this.data.platform.name === 'centos') {
-              this.data.platform.image = require('assets/img/info-platform-centos.jpg')
+              this.data.platform.image = require('@img/info-platform-centos.jpg')
             } else if (this.data.platform.name === 'ubuntu') {
-              this.data.platform.image = require('assets/img/info-platform-ubuntu.jpg')
+              this.data.platform.image = require('@img/info-platform-ubuntu.jpg')
             } else if (this.data.platform.name === 'redhat') {
-              this.data.platform.image = require('assets/img/info-platform-redhat.jpg')
+              this.data.platform.image = require('@img/info-platform-redhat.jpg')
             } else {
-              this.data.platform.image = require('assets/img/info-platform.jpg')
+              this.data.platform.image = require('@img/info-platform.jpg')
             }
           } else {
             this.$message({
@@ -78,6 +95,8 @@ export default {
             })
           }
         }).catch((res) => {
+          console.log(res)
+
           this.$message({
             type: 'error',
             message: '服务异常，请联系管理员！',
@@ -91,7 +110,7 @@ export default {
 
 <style scoped>
 .banner {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
   padding-top: 20px;
   padding-bottom: 20px;
   margin-top: -20px;
@@ -108,7 +127,8 @@ export default {
   max-height: 100px;
   padding-top: 10px;
   padding-bottom: 10px;
-  background-color: #FFFFFF;
+  text-align: center;
+  background-color: #ffffff;
 }
 
 .image {
@@ -119,7 +139,8 @@ export default {
 
 .content {
   border-radius: 0 5px 5px 0;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
+  text-align: center;
 }
 
 .number {
@@ -130,6 +151,6 @@ export default {
 .description {
   font-size: 48px;
   line-height: 70px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 </style>

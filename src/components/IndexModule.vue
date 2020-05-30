@@ -1,35 +1,29 @@
 <template>
   <div class="block">
-    <el-row v-for="(module, i) in modules" :key="module.title">
+    <Row v-for="(module, i) in modules" :key="module.title">
       <div v-if="i % 2 === 0" class="module">
-        <el-col :span="10">
-          <el-image
-            :src="module.image"
-            class="image"
-          />
-        </el-col>
-        <el-col :span="14">
-          <el-row>
+        <Col :span="10" style="text-align: center;">
+          <img :src="module.image" class="image" />
+        </Col>
+        <Col :span="14">
+          <Row>
             <span class="title">{{ module.title }}</span>
-          </el-row>
-          <el-row>
+          </Row>
+          <Row>
             <span class="content">{{ module.content }}</span>
-          </el-row>
-        </el-col>
+          </Row>
+        </Col>
       </div>
       <div v-else class="module">
-        <el-col :span="14">
+        <Col :span="14">
           <span class="title">{{ module.title }}</span>
           <span class="content">{{ module.content }}</span>
-        </el-col>
-        <el-col :span="10">
-          <el-image
-            :src="module.image"
-            class="image"
-          />
-        </el-col>
+        </Col>
+        <Col :span="10" style="text-align: center;">
+          <img :src="module.image" class="image" />
+        </Col>
       </div>
-    </el-row>
+    </Row>
   </div>
 </template>
 
@@ -40,12 +34,12 @@ export default {
       modules: [
         {
           title: '接口测试',
-          image: require('assets/img/module-01.jpg'),
+          image: require('@img/module-01.jpg'),
           content: '完善的接口测试功能支持，全局变量替换，接口间参数提取与关联，分隔符与正则断言支持，fixture等应有尽有！'
         },
         {
           title: 'UI自动化',
-          image: require('assets/img/module-02.jpg'),
+          image: require('@img/module-02.jpg'),
           content: '关键字驱动框架设计，灵活多变，满足一切自动化测试需求！Selenium与Appium双引擎，支持PC和移动端用例混合运行，让自动化不在难！'
         }
       ]
@@ -63,7 +57,7 @@ export default {
   border-radius: 100px;
 }
 
-.el-col {
+.ivu-col {
   padding-top: 15px;
   padding-bottom: 15px;
 }
@@ -74,7 +68,8 @@ export default {
   padding-top: 50px;
   padding-bottom: 10px;
   text-align: left;
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 .content {
@@ -83,7 +78,8 @@ export default {
   padding-top: 10px;
   padding-bottom: 50px;
   text-align: left;
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 .module {
