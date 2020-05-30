@@ -1,12 +1,24 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
     "paths": {
-      "~/*": ["./*"],
-      "@/*": ["./*"],
-      "~~/*": ["./*"],
-      "@@/*": ["./*"]
+      "@c/*": ["src/components/"],
+      "@cc/*": ["src/components/common/"],
+      "@icon/*": ["src/assets/icon/*"],
+      "@img/*": ["src/assets/img/*"],
+      "@theme/*": ["src/assets/theme/*"],
+      "@style/*": ["src/assets/style/*"],
+      "@libs/*": ["src/libs/*"],
+      "@config/*": ["src/config/*"],
+      "@p_m/*": ["src/pages/modules/*"],
+      "@p/*": ["src/pages/*"],
+      "@api/*": ["src/api/*"],
+      "@mixin/*": ["src/mixins/*"],
+      "@/*": ["src/*"]
     }
   },
-  "exclude": ["node_modules", ".nuxt", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "include": ["src"]
 }
