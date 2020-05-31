@@ -107,41 +107,41 @@ module.exports = {
     port: 8080,
     https: false,
     hotOnly: false,
-    // port: port,
-    // open: true,
-    overlay: {
-      warnings: false,
-      errors: true
-    },
     proxy: {
-      // change xxx-api/login => mock/login
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
-      // [process.env.VUE_APP_BASE_API]: {
-      //   target:  `http://localhost:${port}/mock`,
+      // '/biapi': {
+      //   target: 'http://10.138.0.101:3070',
+      //   // ws: true,
       //   changeOrigin: true,
       //   pathRewrite: {
-      //     ['^' + process.env.VUE_APP_BASE_API]: ''
+      //     '^/biapi': ''
+      //   },
+      //   onProxyRes: function (proxyRes, req, res) {
+      //     var cookies = proxyRes.headers['set-cookie']
+      //     var cookieRegex = /Domain=\.?xxx.com/i // 返回的cookie中提取domain
+      //     // 修改cookie Path
+      //     if (cookies) {
+      //       var newCookie = cookies.map(function (cookie) {
+      //         if (cookieRegex.test(cookie)) {
+      //           // 将domain设置为localhost
+      //           return cookie.replace(cookieRegex, 'Domain=localhost')
+      //         }
+      //         return cookie
+      //       })
+      //       delete proxyRes.headers['set-cookie']
+      //       proxyRes.headers['set-cookie'] = newCookie
+      //     }
       //   }
-      // }
-      '/jwt': {
-        // target: 'http://10.0.0.16:8765/',
-        // target: 'http://192.168.20.12:8765',
-        // target: 'http://10.138.6.106:8765',
-        target: 'http://10.138.6.106:8765',
-        // target: 'http://192.168.20.3:8765',
+      // },
+      '/api': {
+        target: 'http://www.52clover.cn',
+        // target: 'http://10.138.6.102:3040',
+        // target: 'http://10.138.6.123:3040',
+        // ws: true,
+        changeOrigin: true,
         pathRewrite: {
-          '^/jwt': '/jwt/'
+          '^/api': '/api'
         }
       }
-      // '/api': {
-      //   // target: 'http://10.0.0.16:8765/',
-      //   // target: 'http://10.138.6.106:8765/',
-      //   target: 'http://10.138.6.106/',
-      //   pathRewrite: {
-      //     '^/api': '/api/ '
-      //   }
-      // }
     }
-    // after: require('./mock/mock-server.js')
   }
 }

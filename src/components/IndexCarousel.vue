@@ -1,5 +1,5 @@
 <template>
-  <Carousel v-model="defaultIndex" loop :autoplay="true" autoplay-speed="5000" :height="height">
+  <Carousel v-model="defaultIndex" loop :autoplay="true" :autoplay-speed="5000" :height="height">
     <CarouselItem v-for="image in images" :key="image.alt">
       <img :src="image.src" alt srcset width="100%" height="100%" />
     </CarouselItem>

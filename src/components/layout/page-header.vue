@@ -45,6 +45,8 @@ export default {
   },
   methods: {
     updateConfig () {
+      console.log('--updateConfig--')
+
       this.$axios
         .get('/api/v1/index/config', {})
         .then((res) => {

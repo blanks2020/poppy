@@ -11,23 +11,57 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["webpack-env", "jest"],
+    "types": [
+      "webpack-env",
+      "jest"
+    ],
     "paths": {
-      "@c/*": ["src/components/*"],
-      "@cc/*": ["src/components/common/*"],
-      "@icon/*": ["src/assets/icon/*"],
-      "@img/*": ["src/assets/img/*"],
-      "@theme/*": ["src/assets/theme/*"],
-      "@style/*": ["src/assets/style/*"],
-      "@libs/*": ["src/libs/*"],
-      "@config/*": ["src/config/*"],
-      "@p_m/*": ["src/pages/modules/*"],
-      "@p/*": ["src/pages/*"],
-      "@api/*": ["src/api/*"],
-      "@mixin/*": ["src/mixins/*"],
-      "@/*": ["src/*"]
+      "@c/*": [
+        "src/components/*"
+      ],
+      "@cc/*": [
+        "src/components/common/*"
+      ],
+      "@icon/*": [
+        "src/assets/icon/*"
+      ],
+      "@img/*": [
+        "src/assets/img/*"
+      ],
+      "@theme/*": [
+        "src/assets/theme/*"
+      ],
+      "@style/*": [
+        "src/assets/style/*"
+      ],
+      "@libs/*": [
+        "src/libs/*"
+      ],
+      "@config/*": [
+        "src/config/*"
+      ],
+      "@p_m/*": [
+        "src/pages/modules/*"
+      ],
+      "@p/*": [
+        "src/pages/*"
+      ],
+      "@api/*": [
+        "src/api/*"
+      ],
+      "@mixin/*": [
+        "src/mixins/*"
+      ],
+      "@/*": [
+        "src/*"
+      ]
     },
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
   },
   "include": [
     "src/**/*.ts",
@@ -35,6 +69,6 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
-  "exclude": ["node_modules"]
+  ]
+  // "exclude": ["node_modules"]
 }

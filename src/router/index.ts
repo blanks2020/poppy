@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'Home',
+    name: 'layout',
     redirect: '/home',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -20,58 +20,58 @@ const routes: Array<RouteConfig> = [
       },
       {
         path: '/interface',
-        name: 'home',
+        name: 'interface',
         component: () => (
-          import(/* webpackChunkName: "interface" */ '@p/home/index')
+          import(/* webpackChunkName: "interface" */ '@p/interface/index.vue')
         )
       },
       {
         path: '/interface/create',
-        name: 'home',
+        name: 'create',
         component: () => (
           import(/* webpackChunkName: "interface-create" */ '@p/home/index')
         )
       },
       {
         path: '/suite',
-        name: 'home',
+        name: 'suite',
         component: () => import(/* webpackChunkName: "suite" */ '@p/home/index')
       },
       {
         path: '/config/project',
-        name: 'home',
+        name: 'project',
         component: () =>
           import(/* webpackChunkName: "project" */ '@p/home/index')
       },
       {
         path: '/config/variable',
-        name: 'home',
+        name: 'variable',
         component: () => (
           import(/* webpackChunkName: "variable" */ '@p/home/index')
         )
       },
       {
         path: '/config/keyword',
-        name: 'home',
+        name: 'keyword',
         component: () => (
           import(/* webpackChunkName: "keyword" */ '@p/home/index')
         )
       },
       {
         path: '/config/plugin',
-        name: 'home',
+        name: 'plugin',
         component: () => (
           import(/* webpackChunkName: "plugin" */ '@p/home/index')
         )
       },
       {
         path: '/config/task',
-        name: 'home',
+        name: 'task',
         component: () => import(/* webpackChunkName: "task" */ '@p/home/index')
       },
       {
         path: '/report',
-        name: 'home',
+        name: 'report',
         component: () => (
           import(/* webpackChunkName: "report" */ '@p/home/index')
         )

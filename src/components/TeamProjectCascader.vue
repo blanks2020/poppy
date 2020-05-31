@@ -1,12 +1,19 @@
 <template>
-  <el-cascader
+  <Cascader
+    :data="options"
+    v-model="cascader"
+    placeholder="请选择团队和项目"
+    @on-change="handleChange"
+    clearable
+  />
+  <!-- <el-cascader
     v-model="cascader"
     :options="options"
     @change="handleChange"
     placeholder="请选择团队和项目"
     size="small"
     clearable
-  />
+  />-->
 </template>
 
 <script>
@@ -29,6 +36,9 @@ export default {
         })
     },
     handleChange (value) {
+      // console.log('---value, selectedData', selectedData)
+      // console.log('---value', value)
+
       this.cascader = value
       const data = {
         team: value[0],

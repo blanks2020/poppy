@@ -1,106 +1,71 @@
 <template>
   <div>
-    <el-row>
-      <el-col :span="4">
-        <TeamProjectCascader v-on:selectedTeamProject="selectedTeamProject" />
-      </el-col>
-      <el-col :span="2" :offset="18">
-        <!-- <el-button
-          @click="createSuite"
-          type="primary"
-          plain
-        >
-          创建套件
-        </el-button> -->
-      </el-col>
-    </el-row>
-    <el-table
+    <Card class="mb10">
+      <Row>
+        <Col :span="5">
+          <TeamProjectCascader @selectedTeamProject="selectedTeamProject" />
+        </Col>
+        <Col :span="2" :offset="18">
+          <!-- <el-button
+            @click="createSuite"
+            type="primary"
+            plain
+          >
+            创建套件
+          </el-button>-->
+        </Col>
+      </Row>
+    </Card>
+    <Table border :columns="columns" :data="data1" class="mb10">
+      <template slot-scope="{ row}" slot="action">
+        <Button type="primary" size="small" style="margin-right: 10px" @click="handleRun(row)">运行</Button>
+        <Button type="warning" size="small" style="margin-right: 10px">编辑</Button>
+        <Button type="error" size="small">删除</Button>
+      </template>
+    </Table>
+    <div class="pager mb10">
+      <Page :total="40" size="small" show-total show-elevator />
+    </div>
+    <!-- <el-table
       :data="data"
       @selection-change="handleSelectionChange"
       v-loading="loading"
       element-loading-text="拼命加载中"
       style="width: 100%"
     >
-      <el-table-column
-        prop="id"
-        label="ID"
-        width="80"
-      />
-      <el-table-column
-        prop="team"
-        label="团队"
-        width="180"
-      />
-      <el-table-column
-        prop="project"
-        label="项目"
-        width="180"
-      />
-      <el-table-column
-        prop="name"
-        label="用例"
-        width="180"
-      />
-      <el-table-column
-        prop="method"
-        label="方法"
-        width="80"
-      />
-      <el-table-column
-        prop="host"
-        label="域名"
-        width="180"
-      />
-      <el-table-column
-        prop="path"
-        label="路径"
-        width="180"
-      />
-      <el-table-column
-        prop="created"
-        label="创建时间"
-        width="180"
-      />
-      <el-table-column
-        prop="updated"
-        label="更新时间"
-        width="180"
-      />
-      <el-table-column
-        fixed="right"
-        label="操作"
-        width="300"
-        align="center"
-      >
+      <el-table-column prop="id" label="ID" width="80" />
+      <el-table-column prop="team" label="团队" width="180" />
+      <el-table-column prop="project" label="项目" width="180" />
+      <el-table-column prop="name" label="用例" width="180" />
+      <el-table-column prop="method" label="方法" width="80" />
+      <el-table-column prop="host" label="域名" width="180" />
+      <el-table-column prop="path" label="路径" width="180" />
+      <el-table-column prop="created" label="创建时间" width="180" />
+      <el-table-column prop="updated" label="更新时间" width="180" />
+      <el-table-column fixed="right" label="操作" width="300" align="center">
         <template slot-scope="scope">
           <el-button
             @click="handleRun(scope.$index, scope.row)"
             size="mini"
             icon="el-icon-video-play"
             type="primary"
-          >
-            运行
-          </el-button>
+          >运行</el-button>
           <el-button
             @click="handleEdit(scope.$index, scope.row)"
             size="mini"
             icon="el-icon-edit"
             type="warning"
-          >
-            编辑
-          </el-button>
+          >编辑</el-button>
           <el-button
             @click="handleDelete(scope.$index, scope.row)"
             size="mini"
             icon="el-icon-delete"
             type="danger"
-          >
-            删除
-          </el-button>
+          >删除</el-button>
         </template>
       </el-table-column>
-    </el-table>
-    <el-pagination
+    </el-table>-->
+    <!-- <el-pagination
       @current-change="handleCurrentChange"
       :total="total"
       background
@@ -112,43 +77,104 @@
           <el-input v-model="report" autocomplete="off" />
         </el-form-item>
         <el-form-item label="动态替换变量">
-          <el-input
-            v-model="variables"
-            type="textarea"
-            placeholder="key:val形式，使用英文;或者换行分隔。"
-          />
+          <el-input v-model="variables" type="textarea" placeholder="key:val形式，使用英文;或者换行分隔。" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">
-          取消
-        </el-button>
-        <el-button @click="runCase" type="primary">
-          确定
-        </el-button>
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button @click="runCase" type="primary">确定</el-button>
       </div>
-    </el-dialog>
+    </el-dialog>-->
   </div>
 </template>
 
 <script>
-import Sortable from 'sortablejs'
-import TeamProjectCascader from '~/components/TeamProjectCascader.vue'
+// import Sortable from 'sortablejs'
+// import TeamProjectCascader from '~/components/TeamProjectCascader.vue'
 
 export default {
+  name: 'home',
   components: {
-    TeamProjectCascader
+    TeamProjectCascader: () => import('@c/TeamProjectCascader')
   },
   data () {
     return {
       data: [],
+      search: {
+        team: '',
+        project: '',
+        limit: 10,
+        offset: 0
+      },
       total: 0,
-      limit: 10,
-      page: 0,
-      team: '',
-      project: '',
       cases: [],
       column: {},
+      columns: [
+        {
+          title: 'ID',
+          key: 'id',
+          width: 80,
+          align: 'center'
+        },
+        {
+          title: '团队',
+          key: 'team',
+          width: 180,
+          align: 'center'
+        },
+        {
+          title: '项目',
+          key: 'project',
+          width: 180,
+          align: 'center'
+        },
+        {
+          title: '用例',
+          key: 'name',
+          width: 180,
+          align: 'center'
+        },
+        {
+          title: '方法',
+          key: 'method',
+          width: 80,
+          align: 'center'
+        },
+        {
+          title: '域名',
+          key: 'host',
+          width: 180,
+          align: 'center'
+        },
+        {
+          title: '路径',
+          key: 'path',
+          width: 180,
+          align: 'center'
+        },
+        {
+          title: '创建时间',
+          key: 'created',
+          width: 180,
+          tooltip: true,
+          align: 'center'
+        },
+        {
+          title: '更新时间',
+          width: 180,
+          tooltip: true,
+          key: 'updated',
+          align: 'center'
+        },
+        {
+          title: '操作',
+          slot: 'action',
+          align: 'center',
+          width: 300,
+          fixed: 'right'
+        }
+      ],
+      data1: [],
       report: '',
       variables: '',
       loading: true,
@@ -165,14 +191,17 @@ export default {
   },
   methods: {
     rowDrop () {
-      const tbody = document.querySelector('.el-table__body-wrapper tbody')
-      const _this = this
-      Sortable.create(tbody, {
-        onEnd ({ newIndex, oldIndex }) {
-          const currRow = _this.data.splice(oldIndex, 1)[0]
-          _this.data.splice(newIndex, 0, currRow)
-        }
-      })
+      // const tbody = document.querySelector('.el-table__body-wrapper tbody')
+      // const _this = this
+      // Sortable.create(tbody, {
+      //   onEnd ({ newIndex, oldIndex }) {
+      //     const currRow = _this.data.splice(oldIndex, 1)[0]
+      //     _this.data.splice(newIndex, 0, currRow)
+      //   }
+      // })
+    },
+    handleSelectionChange () {
+      //
     },
     handleCurrentChange (value) {
       this.page = value - 1
@@ -180,22 +209,12 @@ export default {
     },
     refresh () {
       this.loading = true
-      const params = {
-        limit: this.limit,
-        offset: this.page * this.limit
-      }
-      if (this.team !== '') {
-        params.team = this.team
-      }
-      if (this.project !== '') {
-        params.project = this.project
-      }
       this.$axios
-        .post('/api/v1/interface/search', params)
+        .post('/api/v1/interface/search', this.search)
         .then((res) => {
           if (res.data.status === 0) {
             this.total = res.data.total
-            this.data = res.data.data
+            this.data1 = res.data.data
           } else {
             this.$message({
               type: 'error',
@@ -214,7 +233,7 @@ export default {
           this.loading = false
         })
     },
-    handleRun (index, row) {
+    handleRun (row) {
       this.dialogFormVisible = true
       this.column = row
     },
@@ -273,57 +292,57 @@ export default {
         }
       })
     },
-    handleDelete (index, row) {
-      this.$confirm('此操作将永久删除该接口, 是否继续?', '删除接口', {
-        type: 'warning',
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-      }).then(() => {
-        this.$axios({
-          url: '/api/v1/interface/delete',
-          method: 'post',
-          data: JSON.stringify({
-            id_list: [row.id]
-          }),
-          headers: {
-            'Content-Type': 'application/json;'
-          }
-        }).then((res) => {
-          this.refresh()
-          this.$message({
-            type: 'success',
-            message: '删除成功!',
-            center: true
-          })
-        })
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消删除',
-          center: true
-        })
-      })
-    },
+    // handleDelete (index, row) {
+    //   this.$confirm('此操作将永久删除该接口, 是否继续?', '删除接口', {
+    //     type: 'warning',
+    //     confirmButtonText: '确定',
+    //     cancelButtonText: '取消'
+    //   }).then(() => {
+    //     this.$axios({
+    //       url: '/api/v1/interface/delete',
+    //       method: 'post',
+    //       data: JSON.stringify({
+    //         id_list: [row.id]
+    //       }),
+    //       headers: {
+    //         'Content-Type': 'application/json;'
+    //       }
+    //     }).then((res) => {
+    //       this.refresh()
+    //       this.$message({
+    //         type: 'success',
+    //         message: '删除成功!',
+    //         center: true
+    //       })
+    //     })
+    //   }).catch(() => {
+    //     this.$message({
+    //       type: 'info',
+    //       message: '已取消删除',
+    //       center: true
+    //     })
+    //   })
+    // },
     selectedTeamProject (value) {
-      this.team = value.team
-      this.project = value.project
+      this.search.team = value.team
+      this.search.project = value.project
       this.refresh()
-    },
-    handleSelectionChange (value) {
-      const index = []
-      value.forEach((val, idx) => {
-        this.data.forEach((v, i) => {
-          if (val.id === v.id) {
-            index.push(i)
-          }
-        })
-      })
-      this.cases = []
-      const temp = index.sort()
-      for (const i in temp) {
-        this.cases.push(this.data[temp[i]].id)
-      }
     }
+    // handleSelectionChange (value) {
+    //   const index = []
+    //   value.forEach((val, idx) => {
+    //     this.data.forEach((v, i) => {
+    //       if (val.id === v.id) {
+    //         index.push(i)
+    //       }
+    //     })
+    //   })
+    //   this.cases = []
+    //   const temp = index.sort()
+    //   for (const i in temp) {
+    //     this.cases.push(this.data[temp[i]].id)
+    //   }
+    // }
   }
 }
 </script>
