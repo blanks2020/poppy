@@ -1,6 +1,8 @@
 # poppy
 
-## vscode 配置
+> 我把 master 分支用作 前端页面的预览，所有的开发在 dev 分支进行
+
+## 这是我的 vscode 配置
 
 ```json
 {
