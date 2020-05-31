@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.80e31c168e35a477e2247afe84da829b.js"
+  "/poppy/precache-manifest.5230428b28000633c92055d6c655c18e.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "poppy"});
