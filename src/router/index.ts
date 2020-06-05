@@ -29,53 +29,53 @@ const routes: Array<RouteConfig> = [
         path: '/interface/create',
         name: 'create',
         component: () => (
-          import(/* webpackChunkName: "interface-create" */ '@p/home/index')
-        )
-      },
-      {
-        path: '/suite',
-        name: 'suite',
-        component: () => import(/* webpackChunkName: "suite" */ '@p/home/index')
-      },
-      {
-        path: '/config/project',
-        name: 'project',
-        component: () =>
-          import(/* webpackChunkName: "project" */ '@p/home/index')
-      },
-      {
-        path: '/config/variable',
-        name: 'variable',
-        component: () => (
-          import(/* webpackChunkName: "variable" */ '@p/home/index')
-        )
-      },
-      {
-        path: '/config/keyword',
-        name: 'keyword',
-        component: () => (
-          import(/* webpackChunkName: "keyword" */ '@p/home/index')
-        )
-      },
-      {
-        path: '/config/plugin',
-        name: 'plugin',
-        component: () => (
-          import(/* webpackChunkName: "plugin" */ '@p/home/index')
-        )
-      },
-      {
-        path: '/config/task',
-        name: 'task',
-        component: () => import(/* webpackChunkName: "task" */ '@p/home/index')
-      },
-      {
-        path: '/report',
-        name: 'report',
-        component: () => (
-          import(/* webpackChunkName: "report" */ '@p/home/index')
+          import(/* webpackChunkName: "interface-create" */ '@p/interface/create.vue')
         )
       }
+      // {
+      //   path: '/suite',
+      //   name: 'suite',
+      //   component: () => import(/* webpackChunkName: "suite" */ '@p/home/index')
+      // },
+      // {
+      //   path: '/config/project',
+      //   name: 'project',
+      //   component: () =>
+      //     import(/* webpackChunkName: "project" */ '@p/home/index')
+      // },
+      // {
+      //   path: '/config/variable',
+      //   name: 'variable',
+      //   component: () => (
+      //     import(/* webpackChunkName: "variable" */ '@p/home/index')
+      //   )
+      // },
+      // {
+      //   path: '/config/keyword',
+      //   name: 'keyword',
+      //   component: () => (
+      //     import(/* webpackChunkName: "keyword" */ '@p/home/index')
+      //   )
+      // },
+      // {
+      //   path: '/config/plugin',
+      //   name: 'plugin',
+      //   component: () => (
+      //     import(/* webpackChunkName: "plugin" */ '@p/home/index')
+      //   )
+      // },
+      // {
+      //   path: '/config/task',
+      //   name: 'task',
+      //   component: () => import(/* webpackChunkName: "task" */ '@p/home/index')
+      // },
+      // {
+      //   path: '/report',
+      //   name: 'report',
+      //   component: () => (
+      //     import(/* webpackChunkName: "report" */ '@p/home/index')
+      //   )
+      // }
     ]
   }
   // {

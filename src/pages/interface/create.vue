@@ -1,10 +1,20 @@
 <template>
-  <div class="container">
-    <el-row>
-      <h1>Interface</h1>
-    </el-row>
-    <el-row>
-      <el-col :span="10">
+  <div>
+    <Row>
+      <h1 class="mt20">Interface</h1>
+    </Row>
+    <Row>
+      <Col :span="4">
+        <Select v-model="activeName" style="width:200px">
+          <!-- <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option> -->
+          <!-- <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option> -->
+        </Select>
+      </Col>
+      <Col :span="16"></Col>
+      <Col :span="4"></Col>
+    </Row>
+    <!-- <Row>
+      <Col :span="10">
         <el-input
           v-model="host"
           placeholder="https://github.com"
@@ -20,42 +30,23 @@
               style="width:120px;"
               clearable
             >
-              <el-option
-                v-for="m in methods"
-                :key="m"
-                :label="m"
-                :value="m"
-              />
+              <el-option v-for="m in methods" :key="m" :label="m" :value="m" />
             </el-select>
           </template>
         </el-input>
-      </el-col>
-      <el-col :span="12">
-        <el-input
-          v-model="path"
-          placeholder="/taoyanli0808/clover"
-          clearable
-        />
-      </el-col>
-      <el-col
-        :span="2"
-        style="text-align: right;"
-      >
-        <el-button
-          @click="dialogSubmitFormVisible=true"
-          type="primary"
-        >
-          保存
-        </el-button>
-      </el-col>
-    </el-row>
-    <el-row>
+      </Col>
+      <Col :span="12">
+        <el-input v-model="path" placeholder="/taoyanli0808/clover" clearable />
+      </Col>
+      <Col :span="2" style="text-align: right;">
+        <el-button @click="dialogSubmitFormVisible=true" type="primary">保存</el-button>
+      </Col>
+    </Row>
+    <Row>
       <h1>Request</h1>
-    </el-row>
-    <el-row :gutter="20">
-      <el-tabs
-        v-model="activeName"
-      >
+    </Row>-->
+    <!-- <Row :gutter="20">
+      <el-tabs v-model="activeName">
         <el-tab-pane label="请求头信息" name="first">
           <el-input
             v-model="header"
@@ -101,154 +92,65 @@
             highlight-current-row
             border
           >
-            <el-table-column
-              label="EXTRACTOR"
-              min-width="16%"
-              align="left"
-            >
+            <el-table-column label="EXTRACTOR" min-width="16%" align="left">
               <template scope="scope">
                 <el-select v-model="scope.row.extractor" placeholder="请选择">
-                  <el-option
-                    label="delimiter"
-                    value="delimiter"
-                  />
-                  <el-option
-                    label="regular"
-                    value="regular"
-                  />
+                  <el-option label="delimiter" value="delimiter" />
+                  <el-option label="regular" value="regular" />
                 </el-select>
-                <span>
-                  {{ scope.row.extractor }}
-                </span>
+                <span>{{ scope.row.extractor }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="EXPRESSION"
-              min-width="17%"
-              align="left"
-            >
+            <el-table-column label="EXPRESSION" min-width="17%" align="left">
               <template scope="scope">
-                <el-input
-                  v-model="scope.row.expression"
-                  size="small"
-                  placeholder="请输入内容"
-                />
-                <span>
-                  {{ scope.row.expression }}
-                </span>
+                <el-input v-model="scope.row.expression" size="small" placeholder="请输入内容" />
+                <span>{{ scope.row.expression }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="COMPARATOR"
-              min-width="16%"
-              align="left"
-            >
+            <el-table-column label="COMPARATOR" min-width="16%" align="left">
               <template scope="scope">
                 <el-select v-model="scope.row.comparator" placeholder="请选择">
-                  <el-option
-                    label="等于"
-                    value="equal"
-                  />
-                  <el-option
-                    label="不等于"
-                    value="not_equal"
-                  />
-                  <el-option
-                    label="包含"
-                    value="contain"
-                  />
-                  <el-option
-                    label="不包含"
-                    value="not_contain"
-                  />
-                  <el-option
-                    label="大于"
-                    value="greater"
-                  />
-                  <el-option
-                    label="大于等于"
-                    value="not_less"
-                  />
-                  <el-option
-                    label="小于"
-                    value="less"
-                  />
-                  <el-option
-                    label="小于等于"
-                    value="not_greater"
-                  />
+                  <el-option label="等于" value="equal" />
+                  <el-option label="不等于" value="not_equal" />
+                  <el-option label="包含" value="contain" />
+                  <el-option label="不包含" value="not_contain" />
+                  <el-option label="大于" value="greater" />
+                  <el-option label="大于等于" value="not_less" />
+                  <el-option label="小于" value="less" />
+                  <el-option label="小于等于" value="not_greater" />
                 </el-select>
-                <span>
-                  {{ scope.row.comparator }}
-                </span>
+                <span>{{ scope.row.comparator }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="EXPECTED"
-              min-width="16%"
-              align="left"
-            >
+            <el-table-column label="EXPECTED" min-width="16%" align="left">
               <template scope="scope">
-                <el-input
-                  v-model="scope.row.expected"
-                  size="small"
-                  placeholder="请输入内容"
-                />
-                <span>
-                  {{ scope.row.expected }}
-                </span>
+                <el-input v-model="scope.row.expected" size="small" placeholder="请输入内容" />
+                <span>{{ scope.row.expected }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="CONVERTOR"
-              min-width="16%"
-              align="left"
-            >
+            <el-table-column label="CONVERTOR" min-width="16%" align="left">
               <template scope="scope">
                 <el-select v-model="scope.row.convertor" placeholder="请选择">
-                  <el-option
-                    label="string"
-                    value="str"
-                  />
-                  <el-option
-                    label="int"
-                    value="int"
-                  />
-                  <el-option
-                    label="float"
-                    value="float"
-                  />
-                  <el-option
-                    label="boolean"
-                    value="boolean"
-                  />
+                  <el-option label="string" value="str" />
+                  <el-option label="int" value="int" />
+                  <el-option label="float" value="float" />
+                  <el-option label="boolean" value="boolean" />
                 </el-select>
-                <span>
-                  {{ scope.row.convertor }}
-                </span>
+                <span>{{ scope.row.convertor }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="操作"
-              align="center"
-              min-width="16%"
-              fixed="right"
-            >
+            <el-table-column label="操作" align="center" min-width="16%" fixed="right">
               <template scope="scope">
                 <el-button
                   @click="addAssertTableRow(scope.$index, scope.row)"
                   size="small"
                   type="primary"
-                >
-                  添加
-                </el-button>
+                >添加</el-button>
                 <el-button
                   @click="deleteAssertTableRow(scope.$index, scope.row)"
                   size="small"
                   type="danger"
-                >
-                  删除
-                </el-button>
+                >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -262,11 +164,7 @@
             highlight-current-row
             border
           >
-            <el-table-column
-              label="SELECTOR"
-              min-width="25%"
-              align="left"
-            >
+            <el-table-column label="SELECTOR" min-width="25%" align="left">
               <template scope="scope">
                 <el-select v-model="scope.row.selector" placeholder="请选择">
                   <el-option
@@ -276,73 +174,43 @@
                     :value="item.value"
                   />
                 </el-select>
-                <span>
-                  {{ scope.row.selector }}
-                </span>
+                <span>{{ scope.row.selector }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="EXPRESSION"
-              min-width="25%"
-              align="left"
-            >
+            <el-table-column label="EXPRESSION" min-width="25%" align="left">
               <template scope="scope">
-                <el-input
-                  v-model="scope.row.expression"
-                  size="small"
-                  placeholder="请输入内容"
-                />
-                <span>
-                  {{ scope.row.expression }}
-                </span>
+                <el-input v-model="scope.row.expression" size="small" placeholder="请输入内容" />
+                <span>{{ scope.row.expression }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="VARIABLE"
-              min-width="25%"
-              align="left"
-            >
+            <el-table-column label="VARIABLE" min-width="25%" align="left">
               <template scope="scope">
-                <el-input
-                  v-model="scope.row.variable"
-                  size="small"
-                  placeholder="请输入内容"
-                />
-                <span>
-                  {{ scope.row.variable }}
-                </span>
+                <el-input v-model="scope.row.variable" size="small" placeholder="请输入内容" />
+                <span>{{ scope.row.variable }}</span>
               </template>
             </el-table-column>
-            <el-table-column
-              label="操作"
-              min-width="25%"
-              align="center"
-            >
+            <el-table-column label="操作" min-width="25%" align="center">
               <template scope="scope">
                 <el-button
                   @click="addExtractTableRow(scope.$index, scope.row)"
                   size="small"
                   type="primary"
-                >
-                  添加
-                </el-button>
+                >添加</el-button>
                 <el-button
                   @click="deleteExtractTableRow(scope.$index, scope.row)"
                   size="small"
                   type="danger"
-                >
-                  删除
-                </el-button>
+                >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
         </el-tab-pane>
       </el-tabs>
-    </el-row>
-    <el-row>
+    </Row>
+    <Row>
       <h1>Response</h1>
-    </el-row>
-    <el-row>
+    </Row>
+    <Row>
       <el-tabs v-model="activeResponseTab">
         <el-tab-pane label="响应体" name="responseBody">
           <pre><code>{{ response.json || response.content }}</code></pre>
@@ -350,11 +218,9 @@
         <el-tab-pane label="响应头" name="responseHeader">
           <pre><code>{{ response.header }}</code></pre>
         </el-tab-pane>
-        <el-tab-pane label="响应Cookie" name="responseCookie">
-          Cookie
-        </el-tab-pane>
+        <el-tab-pane label="响应Cookie" name="responseCookie">Cookie</el-tab-pane>
       </el-tabs>
-    </el-row>
+    </Row>
     <el-dialog :visible.sync="dialogSubmitFormVisible" title="提交接口">
       <TeamProjectCascader v-on:selectedTeamProject="selectedTeamProject" />
       <el-form>
@@ -363,24 +229,20 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogSubmitFormVisible = false">
-          取消
-        </el-button>
-        <el-button @click="submit" type="primary">
-          确定
-        </el-button>
+        <el-button @click="dialogSubmitFormVisible = false">取消</el-button>
+        <el-button @click="submit" type="primary">确定</el-button>
       </div>
-    </el-dialog>
+    </el-dialog>-->
   </div>
 </template>
 
 <script>
-import TeamProjectCascader from '~/components/TeamProjectCascader.vue'
+// import TeamProjectCascader from '~/components/TeamProjectCascader.vue'
 
 export default {
-  components: {
-    TeamProjectCascader
-  },
+  // components: {
+  //   TeamProjectCascader
+  // },
   data () {
     return {
       teams: [],
@@ -417,8 +279,8 @@ export default {
       header: '',
       params: '',
       body: {
-        'mode': 'raw',
-        'data': ''
+        mode: 'raw',
+        data: ''
       },
       assert: [{
         extractor: '',
@@ -443,346 +305,346 @@ export default {
     },
     selectMethod (value) {
       this.method = value
-    },
-    addHeaderTableRow (index, row) {
-      this.header.push({
-        key: '',
-        value: ''
-      })
-      const last = this.$refs.headerTable.data.length
-      const currentRow = this.$refs.headerTable.data[last]
-      this.$refs.headerTable.setCurrentRow(currentRow)
-    },
-    deleteHeaderTableRow (index, row) {
-      this.header = this.header.filter(item => item.key !== row.key)
-      if (Array.prototype.isPrototypeOf(this.header) && this.header.length === 0) {
-        this.header.push({
-          key: '',
-          value: ''
-        })
-      }
-    },
-    addParameterTableRow (index, row) {
-      this.param.push({
-        key: '',
-        value: ''
-      })
-    },
-    deleteParameterTableRow (index, row) {
-      this.param = this.param.filter(item => item.key !== row.key)
-      if (Array.prototype.isPrototypeOf(this.param) && this.param.length === 0) {
-        this.param.push({
-          key: '',
-          value: ''
-        })
-      }
-    },
-    addBodyTableRow (index, row) {
-      this.body.data.push({
-        key: '',
-        value: ''
-      })
-    },
-    deleteBodyTableRow (index, row) {
-      this.body.data = this.body.data.filter(item => item.key !== row.key)
-      if (Array.prototype.isPrototypeOf(this.body.data) && this.body.data.length === 0) {
-        this.body.data.push({
-          key: '',
-          value: ''
-        })
-      }
-    },
-    currentAssertTableChange (row, event, column) {
-    },
-    addAssertTableRow (index, row) {
-      this.assert.push({
-        extractor: '',
-        expression: '',
-        comparator: '',
-        convertor: '',
-        expected: ''
-      })
-    },
-    deleteAssertTableRow (index, row) {
-      this.assert = this.assert.filter((item, idx) => idx !== index)
-      if (Array.prototype.isPrototypeOf(this.assert) && this.assert.length === 0) {
-        this.assert.push({
-          extractor: '',
-          expression: '',
-          comparator: '',
-          convertor: '',
-          expected: ''
-        })
-      }
-    },
-    addExtractTableRow (index, row) {
-      this.extract.push({
-        selector: '',
-        expression: '',
-        variabel: ''
-      })
-      const last = this.$refs.extractTable.data.length
-      const currentRow = this.$refs.extractTable.data[last]
-      this.$refs.extractTable.setCurrentRow(currentRow)
-    },
-    deleteExtractTableRow (index, row) {
-      this.extract = this.extract.filter((item, idx) => idx !== index)
-      if (Array.prototype.isPrototypeOf(this.extract) && this.extract.length === 0) {
-        this.extract.push({
-          selector: '',
-          expression: '',
-          expected: ''
-        })
-      }
-    },
-    translateData (data) {
-      const result = []
-      const variables = data.split('\n')
-      for (const index in variables) {
-        // remove empty string
-        if (variables[index] === '') {
-          continue
-        }
-        const sep = variables[index].indexOf(':')
-        result.push({
-          key: variables[index].slice(0, sep),
-          value: variables[index].slice(sep + 1, variables[index].length)
-        })
-      }
-      return result
-    },
-    translateBody (data) {
-      if (data.mode === 'formdata' || data.mode === 'urlencoded') {
-        const result = []
-        const newData = { ...data }
-        const variables = data.data.split('\n')
-        for (const index in variables) {
-          // remove empty string
-          if (variables[index] === '') {
-            continue
-          }
-          const sep = variables[index].indexOf(':')
-          result.push({
-            key: variables[index].slice(0, sep),
-            value: variables[index].slice(sep + 1, variables[index].length)
-          })
-        }
-        newData.data = result
-        return newData
-      } else if (data.mode === 'file') { // mode === 'file'
-        return data
-      } else { // mode === 'raw'
-        return data
-      }
-    },
-    translateVerify (data) {
-      return data.filter(item => item.extractor !== '')
-    },
-    translateExtract (data) {
-      return data.filter(item => item.selector !== '')
-    },
-    create () {
-      this.$axios({
-        url: '/api/v1/interface/create',
-        method: 'post',
-        data: JSON.stringify({
-          team: this.team,
-          project: this.project,
-          name: this.name,
-          host: this.host,
-          path: this.path,
-          method: this.method,
-          header: this.translateData(this.header),
-          params: this.translateData(this.params),
-          body: this.translateBody(this.body),
-          verify: this.translateVerify(this.assert),
-          extract: this.translateExtract(this.extract)
-        }),
-        headers: {
-          'Content-Type': 'application/json;'
-        }
-      }).then((res) => {
-        if (res.data.status === 0) {
-          this.$message({
-            type: 'success',
-            message: '提交成功',
-            center: true
-          })
-          this.id = res.data.data.id
-          this.team = res.data.data.team
-          this.project = res.data.data.project
-          this.name = res.data.data.name
-          this.host = res.data.data.host
-          this.path = res.data.data.path
-          this.method = res.data.data.method
-          this.header = this.untranslateData(res.data.data.header)
-          this.params = this.untranslateData(res.data.data.params)
-          this.body = this.untranslateBody(res.data.data.body)
-          this.assert = this.untranslateVerify(res.data.data.verify)
-          this.extract = this.untranslateExtract(res.data.data.extract)
-          this.response = res.data.data.response
-        } else {
-          let level = 'info'
-          if (res.data.status >= 500) {
-            level = 'error'
-          }
-          this.$message({
-            type: level,
-            message: res.data.message,
-            center: true
-          })
-          this.response = res.data.data
-        }
-        this.dialogSubmitFormVisible = false
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '服务器偷懒了！',
-          center: true
-        })
-      })
-    },
-    update () {
-      this.$axios({
-        url: '/api/v1/interface/update',
-        method: 'post',
-        data: JSON.stringify({
-          id: this.id,
-          team: this.team,
-          project: this.project,
-          name: this.name,
-          host: this.host,
-          path: this.path,
-          method: this.method,
-          header: this.translateData(this.header),
-          params: this.translateData(this.params),
-          body: this.translateBody(this.body),
-          verify: this.translateVerify(this.assert),
-          extract: this.translateExtract(this.extract)
-        }),
-        headers: {
-          'Content-Type': 'application/json;'
-        }
-      }).then((res) => {
-        if (res.data.status === 0) {
-          this.$message({
-            type: 'success',
-            message: '提交成功',
-            center: true
-          })
-          this.id = res.data.data.id
-          this.team = res.data.data.team
-          this.project = res.data.data.project
-          this.name = res.data.data.name
-          this.host = res.data.data.host
-          this.path = res.data.data.path
-          this.method = res.data.data.method
-          this.header = this.untranslateData(res.data.data.header)
-          this.params = this.untranslateData(res.data.data.params)
-          this.body = this.untranslateBody(res.data.data.body)
-          this.assert = this.untranslateVerify(res.data.data.verify)
-          this.extract = this.untranslateExtract(res.data.data.extract)
-          this.response = res.data.data.response
-        } else {
-          let level = 'info'
-          if (res.data.status >= 500) {
-            level = 'error'
-          }
-          this.$message({
-            type: level,
-            message: res.data.message,
-            center: true
-          })
-          this.response = res.data.data
-        }
-        this.dialogSubmitFormVisible = false
-      }).catch(() => {
-        this.$message({
-          type: 'error',
-          message: '服务器偷懒了！',
-          center: true
-        })
-      })
-    },
-    submit () {
-      if (this.id === '') {
-        this.create()
-      } else {
-        this.update()
-      }
-    },
-    untranslateData (data) {
-      let result = ''
-      for (const i in data) {
-        if (data[i].key !== '') {
-          result += data[i].key + ':' + data[i].value + '\n'
-        }
-      }
-      return result
-    },
-    untranslateBody (data) {
-      /*
-      * 由于页面展示body数据使用的是areatext，因此如果数据格式是
-      * formdata或urlencoded需要转换为\n分割的字符串格式以便显示
-      * 如果格式是file，暂时为定义处理方式，暂不支持
-      * 如果数据格式是raw则直接展示，默认情况下格式为raw
-      */
-      switch (data.mode) {
-        case 'formdata':
-          const formdata = []
-          for (const i in data.data) {
-            const item = data.data[i].key + ':' + data.data[i].value
-            formdata.push(item)
-          }
-          data.data = formdata.join('\n')
-          break
-        case 'urlencoded':
-          const urlencoded = []
-          for (const i in data.data) {
-            const item = data.data[i].key + ':' + data.data[i].value
-            urlencoded.push(item)
-          }
-          data.data = urlencoded.join('\n')
-          break
-        case 'file':
-          break
-        default:
-          data.mode = 'raw'
-          data.data = ''
-          break
-      }
-      return data
-    },
-    untranslateVerify (data) {
-      if (Array.prototype.isPrototypeOf(data) && data.length === 0) {
-        data = [
-          {
-            'expected': '',
-            'convertor': '',
-            'extractor': '',
-            'comparator': '',
-            'expression': ''
-          }
-        ]
-        return data
-      } else {
-        return data
-      }
-    },
-    untranslateExtract (data) {
-      if (Array.prototype.isPrototypeOf(data) && data.length === 0) {
-        data = [
-          {
-            'selector': '',
-            'variable': '',
-            'expression': ''
-          }
-        ]
-        return data
-      } else {
-        return data
-      }
     }
+    // addHeaderTableRow (index, row) {
+    //   this.header.push({
+    //     key: '',
+    //     value: ''
+    //   })
+    //   const last = this.$refs.headerTable.data.length
+    //   const currentRow = this.$refs.headerTable.data[last]
+    //   this.$refs.headerTable.setCurrentRow(currentRow)
+    // },
+    // deleteHeaderTableRow (index, row) {
+    //   this.header = this.header.filter(item => item.key !== row.key)
+    //   if (Array.prototype.isPrototypeOf(this.header) && this.header.length === 0) {
+    //     this.header.push({
+    //       key: '',
+    //       value: ''
+    //     })
+    //   }
+    // },
+    // addParameterTableRow (index, row) {
+    //   this.param.push({
+    //     key: '',
+    //     value: ''
+    //   })
+    // },
+    // deleteParameterTableRow (index, row) {
+    //   this.param = this.param.filter(item => item.key !== row.key)
+    //   if (Array.prototype.isPrototypeOf(this.param) && this.param.length === 0) {
+    //     this.param.push({
+    //       key: '',
+    //       value: ''
+    //     })
+    //   }
+    // },
+    // addBodyTableRow (index, row) {
+    //   this.body.data.push({
+    //     key: '',
+    //     value: ''
+    //   })
+    // },
+    // deleteBodyTableRow (index, row) {
+    //   this.body.data = this.body.data.filter(item => item.key !== row.key)
+    //   if (Array.prototype.isPrototypeOf(this.body.data) && this.body.data.length === 0) {
+    //     this.body.data.push({
+    //       key: '',
+    //       value: ''
+    //     })
+    //   }
+    // },
+    // currentAssertTableChange (row, event, column) {
+    // },
+    // addAssertTableRow (index, row) {
+    //   this.assert.push({
+    //     extractor: '',
+    //     expression: '',
+    //     comparator: '',
+    //     convertor: '',
+    //     expected: ''
+    //   })
+    // },
+    // deleteAssertTableRow (index, row) {
+    //   this.assert = this.assert.filter((item, idx) => idx !== index)
+    //   if (Array.prototype.isPrototypeOf(this.assert) && this.assert.length === 0) {
+    //     this.assert.push({
+    //       extractor: '',
+    //       expression: '',
+    //       comparator: '',
+    //       convertor: '',
+    //       expected: ''
+    //     })
+    //   }
+    // },
+    // addExtractTableRow (index, row) {
+    //   this.extract.push({
+    //     selector: '',
+    //     expression: '',
+    //     variabel: ''
+    //   })
+    //   const last = this.$refs.extractTable.data.length
+    //   const currentRow = this.$refs.extractTable.data[last]
+    //   this.$refs.extractTable.setCurrentRow(currentRow)
+    // },
+    // deleteExtractTableRow (index, row) {
+    //   this.extract = this.extract.filter((item, idx) => idx !== index)
+    //   if (Array.prototype.isPrototypeOf(this.extract) && this.extract.length === 0) {
+    //     this.extract.push({
+    //       selector: '',
+    //       expression: '',
+    //       expected: ''
+    //     })
+    //   }
+    // },
+    // translateData (data) {
+    //   const result = []
+    //   const variables = data.split('\n')
+    //   for (const index in variables) {
+    //     // remove empty string
+    //     if (variables[index] === '') {
+    //       continue
+    //     }
+    //     const sep = variables[index].indexOf(':')
+    //     result.push({
+    //       key: variables[index].slice(0, sep),
+    //       value: variables[index].slice(sep + 1, variables[index].length)
+    //     })
+    //   }
+    //   return result
+    // },
+    // translateBody (data) {
+    //   if (data.mode === 'formdata' || data.mode === 'urlencoded') {
+    //     const result = []
+    //     const newData = { ...data }
+    //     const variables = data.data.split('\n')
+    //     for (const index in variables) {
+    //       // remove empty string
+    //       if (variables[index] === '') {
+    //         continue
+    //       }
+    //       const sep = variables[index].indexOf(':')
+    //       result.push({
+    //         key: variables[index].slice(0, sep),
+    //         value: variables[index].slice(sep + 1, variables[index].length)
+    //       })
+    //     }
+    //     newData.data = result
+    //     return newData
+    //   } else if (data.mode === 'file') { // mode === 'file'
+    //     return data
+    //   } else { // mode === 'raw'
+    //     return data
+    //   }
+    // },
+    // translateVerify (data) {
+    //   return data.filter(item => item.extractor !== '')
+    // },
+    // translateExtract (data) {
+    //   return data.filter(item => item.selector !== '')
+    // },
+    // create () {
+    //   this.$axios({
+    //     url: '/api/v1/interface/create',
+    //     method: 'post',
+    //     data: JSON.stringify({
+    //       team: this.team,
+    //       project: this.project,
+    //       name: this.name,
+    //       host: this.host,
+    //       path: this.path,
+    //       method: this.method,
+    //       header: this.translateData(this.header),
+    //       params: this.translateData(this.params),
+    //       body: this.translateBody(this.body),
+    //       verify: this.translateVerify(this.assert),
+    //       extract: this.translateExtract(this.extract)
+    //     }),
+    //     headers: {
+    //       'Content-Type': 'application/json;'
+    //     }
+    //   }).then((res) => {
+    //     if (res.data.status === 0) {
+    //       this.$message({
+    //         type: 'success',
+    //         message: '提交成功',
+    //         center: true
+    //       })
+    //       this.id = res.data.data.id
+    //       this.team = res.data.data.team
+    //       this.project = res.data.data.project
+    //       this.name = res.data.data.name
+    //       this.host = res.data.data.host
+    //       this.path = res.data.data.path
+    //       this.method = res.data.data.method
+    //       this.header = this.untranslateData(res.data.data.header)
+    //       this.params = this.untranslateData(res.data.data.params)
+    //       this.body = this.untranslateBody(res.data.data.body)
+    //       this.assert = this.untranslateVerify(res.data.data.verify)
+    //       this.extract = this.untranslateExtract(res.data.data.extract)
+    //       this.response = res.data.data.response
+    //     } else {
+    //       let level = 'info'
+    //       if (res.data.status >= 500) {
+    //         level = 'error'
+    //       }
+    //       this.$message({
+    //         type: level,
+    //         message: res.data.message,
+    //         center: true
+    //       })
+    //       this.response = res.data.data
+    //     }
+    //     this.dialogSubmitFormVisible = false
+    //   }).catch(() => {
+    //     this.$message({
+    //       type: 'error',
+    //       message: '服务器偷懒了！',
+    //       center: true
+    //     })
+    //   })
+    // },
+    // update () {
+    //   this.$axios({
+    //     url: '/api/v1/interface/update',
+    //     method: 'post',
+    //     data: JSON.stringify({
+    //       id: this.id,
+    //       team: this.team,
+    //       project: this.project,
+    //       name: this.name,
+    //       host: this.host,
+    //       path: this.path,
+    //       method: this.method,
+    //       header: this.translateData(this.header),
+    //       params: this.translateData(this.params),
+    //       body: this.translateBody(this.body),
+    //       verify: this.translateVerify(this.assert),
+    //       extract: this.translateExtract(this.extract)
+    //     }),
+    //     headers: {
+    //       'Content-Type': 'application/json;'
+    //     }
+    //   }).then((res) => {
+    //     if (res.data.status === 0) {
+    //       this.$message({
+    //         type: 'success',
+    //         message: '提交成功',
+    //         center: true
+    //       })
+    //       this.id = res.data.data.id
+    //       this.team = res.data.data.team
+    //       this.project = res.data.data.project
+    //       this.name = res.data.data.name
+    //       this.host = res.data.data.host
+    //       this.path = res.data.data.path
+    //       this.method = res.data.data.method
+    //       this.header = this.untranslateData(res.data.data.header)
+    //       this.params = this.untranslateData(res.data.data.params)
+    //       this.body = this.untranslateBody(res.data.data.body)
+    //       this.assert = this.untranslateVerify(res.data.data.verify)
+    //       this.extract = this.untranslateExtract(res.data.data.extract)
+    //       this.response = res.data.data.response
+    //     } else {
+    //       let level = 'info'
+    //       if (res.data.status >= 500) {
+    //         level = 'error'
+    //       }
+    //       this.$message({
+    //         type: level,
+    //         message: res.data.message,
+    //         center: true
+    //       })
+    //       this.response = res.data.data
+    //     }
+    //     this.dialogSubmitFormVisible = false
+    //   }).catch(() => {
+    //     this.$message({
+    //       type: 'error',
+    //       message: '服务器偷懒了！',
+    //       center: true
+    //     })
+    //   })
+    // },
+    // submit () {
+    //   if (this.id === '') {
+    //     this.create()
+    //   } else {
+    //     this.update()
+    //   }
+    // },
+    // untranslateData (data) {
+    //   let result = ''
+    //   for (const i in data) {
+    //     if (data[i].key !== '') {
+    //       result += data[i].key + ':' + data[i].value + '\n'
+    //     }
+    //   }
+    //   return result
+    // },
+    // untranslateBody (data) {
+    //   /*
+    //   * 由于页面展示body数据使用的是areatext，因此如果数据格式是
+    //   * formdata或urlencoded需要转换为\n分割的字符串格式以便显示
+    //   * 如果格式是file，暂时为定义处理方式，暂不支持
+    //   * 如果数据格式是raw则直接展示，默认情况下格式为raw
+    //   */
+    //   // switch (data.mode) {
+    //   //   case 'formdata':
+    //   //     const formdata = []
+    //   //     for (const i in data.data) {
+    //   //       const item = data.data[i].key + ':' + data.data[i].value
+    //   //       formdata.push(item)
+    //   //     }
+    //   //     data.data = formdata.join('\n')
+    //   //     break
+    //   //   case 'urlencoded':
+    //   //     const urlencoded = []
+    //   //     for (const i in data.data) {
+    //   //       const item = data.data[i].key + ':' + data.data[i].value
+    //   //       urlencoded.push(item)
+    //   //     }
+    //   //     data.data = urlencoded.join('\n')
+    //   //     break
+    //   //   case 'file':
+    //   //     break
+    //   //   default:
+    //   //     data.mode = 'raw'
+    //   //     data.data = ''
+    //   //     break
+    //   // }
+    //   // return data
+    // },
+    // untranslateVerify (data) {
+    //   // if (Array.prototype.isPrototypeOf(data) && data.length === 0) {
+    //   //   data = [
+    //   //     {
+    //   //       'expected': '',
+    //   //       'convertor': '',
+    //   //       'extractor': '',
+    //   //       'comparator': '',
+    //   //       'expression': ''
+    //   //     }
+    //   //   ]
+    //   //   return data
+    //   // } else {
+    //   //   return data
+    //   // }
+    // },
+    // untranslateExtract (data) {
+    //   //   if (Array.prototype.isPrototypeOf(data) && data.length === 0) {
+    //   //     data = [
+    //   //       {
+    //   //         'selector': '',
+    //   //         'variable': '',
+    //   //         'expression': ''
+    //   //       }
+    //   //     ]
+    //   //     return data
+    //   //   } else {
+    //   //     return data
+    //   //   }
+    // }
   }
 }
 </script>
@@ -812,26 +674,26 @@ h1 {
 }
 
 .tb-edit .el-input {
-  display: none
+  display: none;
 }
 
 .tb-edit .current-row .el-input {
-  display: block
+  display: block;
 }
 
-.tb-edit .current-row .el-input+span {
-  display: none
+.tb-edit .current-row .el-input + span {
+  display: none;
 }
 
 .tb-edit .el-select {
-  display: none
+  display: none;
 }
 
 .tb-edit .current-row .el-select {
-  display: block
+  display: block;
 }
 
-.tb-edit .current-row .el-select+span {
-  display: none
+.tb-edit .current-row .el-select + span {
+  display: none;
 }
 </style>
