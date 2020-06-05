@@ -16,82 +16,70 @@
         </Col>
       </Row>
     </Card>
-    <Table border :columns="columns" :data="data1" class="mb10">
-      <template slot-scope="{ row}" slot="action">
-        <Button type="primary" size="small" style="margin-right: 10px" @click="handleRun(row)">运行</Button>
-        <Button type="warning" size="small" style="margin-right: 10px">编辑</Button>
-        <Button type="error" size="small">删除</Button>
+    <Table
+      border
+      :columns="columns"
+      :data="data1"
+      class="mb10"
+      :loading="loading"
+      :draggable="true"
+    >
+      <template slot-scope="{ row }" slot="action">
+        <Button
+          type="primary"
+          size="small"
+          style="margin-right: 10px"
+          @click="handleRun(row)"
+          icon="md-play"
+        >运行</Button>
+        <Button
+          type="warning"
+          size="small"
+          style="margin-right: 10px"
+          icon="md-create"
+          @click="handleEdit(row)"
+        >编辑</Button>
+        <Button type="error" size="small" icon="md-trash">删除</Button>
       </template>
     </Table>
     <div class="pager mb10">
-      <Page :total="40" size="small" show-total show-elevator />
+      <Page
+        :total="page.total"
+        size="small"
+        show-total
+        show-elevator
+        :current="page.current"
+        @on-change="handlePageNumChange"
+      />
     </div>
-    <!-- <el-table
-      :data="data"
-      @selection-change="handleSelectionChange"
-      v-loading="loading"
-      element-loading-text="拼命加载中"
-      style="width: 100%"
-    >
-      <el-table-column prop="id" label="ID" width="80" />
-      <el-table-column prop="team" label="团队" width="180" />
-      <el-table-column prop="project" label="项目" width="180" />
-      <el-table-column prop="name" label="用例" width="180" />
-      <el-table-column prop="method" label="方法" width="80" />
-      <el-table-column prop="host" label="域名" width="180" />
-      <el-table-column prop="path" label="路径" width="180" />
-      <el-table-column prop="created" label="创建时间" width="180" />
-      <el-table-column prop="updated" label="更新时间" width="180" />
-      <el-table-column fixed="right" label="操作" width="300" align="center">
-        <template slot-scope="scope">
-          <el-button
-            @click="handleRun(scope.$index, scope.row)"
-            size="mini"
-            icon="el-icon-video-play"
-            type="primary"
-          >运行</el-button>
-          <el-button
-            @click="handleEdit(scope.$index, scope.row)"
-            size="mini"
-            icon="el-icon-edit"
-            type="warning"
-          >编辑</el-button>
-          <el-button
-            @click="handleDelete(scope.$index, scope.row)"
-            size="mini"
-            icon="el-icon-delete"
-            type="danger"
-          >删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>-->
-    <!-- <el-pagination
-      @current-change="handleCurrentChange"
-      :total="total"
-      background
-      layout="total, prev, pager, next, jumper"
-    />
-    <el-dialog :visible.sync="dialogFormVisible" title="运行接口">
-      <el-form>
-        <el-form-item label="测试报告名称">
-          <el-input v-model="report" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="动态替换变量">
-          <el-input v-model="variables" type="textarea" placeholder="key:val形式，使用英文;或者换行分隔。" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button @click="runCase" type="primary">确定</el-button>
-      </div>
-    </el-dialog>-->
+
+    <Modal v-model="dialogFormVisible" title="运行接口" :footer-hide="true">
+      <Row>
+        <Col :span="20" offset="2">
+          <Form>
+            <FormItem label="测试报告名称">
+              <Input type="text" v-model="report" placeholder="Username" />
+            </FormItem>
+            <FormItem label="动态替换变量">
+              <Input
+                v-model="variables"
+                type="textarea"
+                :autosize="{minRows: 2,maxRows: 5}"
+                placeholder="key:val形式，使用英文;或者换行分隔。"
+              ></Input>
+            </FormItem>
+          </Form>
+          <div class="tac">
+            <Button class="mr20" @click="dialogFormVisible = false">取消</Button>
+            <Button @click="runCase" type="primary">确定</Button>
+          </div>
+        </Col>
+      </Row>
+    </Modal>
   </div>
 </template>
 
 <script>
-// import Sortable from 'sortablejs'
-// import TeamProjectCascader from '~/components/TeamProjectCascader.vue'
-
 export default {
   name: 'home',
   components: {
@@ -99,16 +87,14 @@ export default {
   },
   data () {
     return {
-      data: [],
       search: {
         team: '',
         project: '',
         limit: 10,
         offset: 0
       },
-      total: 0,
       cases: [],
-      column: {},
+      currentRow: {},
       columns: [
         {
           title: 'ID',
@@ -174,10 +160,16 @@ export default {
           fixed: 'right'
         }
       ],
+      page: {
+        total: 0,
+        current: 1,
+        size: 10
+      },
       data1: [],
       report: '',
       variables: '',
-      loading: true,
+      // loading: true,
+      loading: false,
       dialogFormVisible: false
     }
   },
@@ -203,8 +195,9 @@ export default {
     handleSelectionChange () {
       //
     },
-    handleCurrentChange (value) {
-      this.page = value - 1
+    handlePageNumChange (value) {
+      this.page.current = value
+      this.search.offset = this.page.size * (value - 1)
       this.refresh()
     },
     refresh () {
@@ -212,8 +205,10 @@ export default {
       this.$axios
         .post('/api/v1/interface/search', this.search)
         .then((res) => {
+          // console.log('----interface/search---res-: ', res)
+
           if (res.data.status === 0) {
-            this.total = res.data.total
+            this.page.total = res.data.total
             this.data1 = res.data.data
           } else {
             this.$message({
@@ -235,16 +230,16 @@ export default {
     },
     handleRun (row) {
       this.dialogFormVisible = true
-      this.column = row
+      this.currentRow = row
     },
     runCase () {
       const params = {
         report: this.report,
-        ...this.column
+        ...this.currentRow
       }
       if (this.variables) {
         params.variables = []
-        const tmpstr = this.variables.replace(/\n/g, ';')
+        const tmpstr = this.variables.trim().replace(/\n/g, ';')
         const variables = tmpstr.split(';')
         for (const index in variables) {
           const separator = variables[index].indexOf(':')
@@ -284,7 +279,7 @@ export default {
         })
       })
     },
-    handleEdit (index, row) {
+    handleEdit (row) {
       this.$router.push({
         path: '/interface/edit',
         query: {
@@ -326,6 +321,8 @@ export default {
     selectedTeamProject (value) {
       this.search.team = value.team
       this.search.project = value.project
+      this.search.offset = 0
+      this.page.current = 1
       this.refresh()
     }
     // handleSelectionChange (value) {
