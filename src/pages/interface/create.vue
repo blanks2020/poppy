@@ -1,18 +1,37 @@
 <template>
   <div>
-    <Row>
-      <h1 class="mt20">Interface</h1>
-    </Row>
-    <Row>
+    <h2 class="pt20 pb10">Interface</h2>
+    <Row :gutter="4">
       <Col :span="4">
-        <Select v-model="activeName" style="width:200px">
-          <!-- <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option> -->
-          <!-- <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option> -->
+        <Select @change="selectMethod" v-model="method" placeholder="请求方法" clearable>
+          <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
         </Select>
       </Col>
-      <Col :span="16"></Col>
-      <Col :span="4"></Col>
+      <Col :span="10">
+        <Input placeholder="https://github.com" />
+      </Col>
+      <Col :span="8">
+        <Input placeholder="/taoyanli0808/clover" />
+      </Col>
+      <Col :span="2" class="tar">
+        <Button type="primary">保存</Button>
+      </Col>
     </Row>
+    <h2 class="pt40 pb10">Request</h2>
+    <Tabs value="name1">
+      <TabPane label="请求头信息" name="name1">标签一的内容</TabPane>
+      <TabPane label="请求参数" name="name2">标签二的内容</TabPane>
+      <TabPane label="请求体" name="name3">标签三的内容</TabPane>
+      <TabPane label="添加断言" name="name4">标签四的内容</TabPane>
+      <TabPane label="提取响应" name="name5">标签五的内容</TabPane>
+    </Tabs>
+    <h2 class="pt40 pb10">Response</h2>
+    <Tabs value="name1">
+      <TabPane label="响应体" name="name1">标签一的内容</TabPane>
+      <TabPane label="响应头" name="name2">标签二的内容</TabPane>
+      <TabPane label="响应Cookie" name="name3">标签三的内容</TabPane>
+    </Tabs>
     <!-- <Row>
       <Col :span="10">
         <el-input
@@ -648,52 +667,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.container {
-  padding-left: 100px;
-  padding-right: 100px;
-}
-
-.el-row {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-h1 {
-  margin-bottom: -20px;
-}
-
-.el-select {
-  width: 100%;
-}
-
-.input-with-select .el-input-group__prepend {
-  width: 130px;
-  background-color: #fff;
-}
-
-.tb-edit .el-input {
-  display: none;
-}
-
-.tb-edit .current-row .el-input {
-  display: block;
-}
-
-.tb-edit .current-row .el-input + span {
-  display: none;
-}
-
-.tb-edit .el-select {
-  display: none;
-}
-
-.tb-edit .current-row .el-select {
-  display: block;
-}
-
-.tb-edit .current-row .el-select + span {
-  display: none;
-}
-</style>
