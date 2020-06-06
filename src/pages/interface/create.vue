@@ -4,8 +4,7 @@
     <Row :gutter="4">
       <Col :span="4">
         <Select @change="selectMethod" v-model="method" placeholder="请求方法" clearable>
-          <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+          <Option v-for="m in methods" :key="m" :label="m" :value="m" />
         </Select>
       </Col>
       <Col :span="10">
@@ -20,10 +19,105 @@
     </Row>
     <h2 class="pt40 pb10">Request</h2>
     <Tabs value="name1">
-      <TabPane label="请求头信息" name="name1">标签一的内容</TabPane>
-      <TabPane label="请求参数" name="name2">标签二的内容</TabPane>
-      <TabPane label="请求体" name="name3">标签三的内容</TabPane>
-      <TabPane label="添加断言" name="name4">标签四的内容</TabPane>
+      <TabPane label="请求头信息" name="name1">
+        <Input
+          v-model="header"
+          :autosize="minsize"
+          type="textarea"
+          placeholder="请输入请求头信息,key:value形式，使用换行分隔参数。"
+          show-word-limit
+        />
+      </TabPane>
+      <TabPane label="请求参数" name="name2">
+        <Input
+          v-model="params"
+          :autosize="minsize"
+          type="textarea"
+          placeholder="请输入请求参数,key:value形式，使用换行分隔参数。一般情况下请求参数会拼接成url，例如http://52clover.cn/s?a=1&b=2"
+          show-word-limit
+        />
+      </TabPane>
+      <TabPane label="请求体" name="name3">
+        <Select v-model="body.mode" placeholder="请选择">
+          <Option
+            v-for="type in bodyType"
+            :key="type.value"
+            :label="type.label"
+            :value="type.value"
+          />
+        </Select>
+        <Input
+          v-model="body.data"
+          :autosize="minsize"
+          type="textarea"
+          placeholder="请输入请求体,key:value形式，使用换行分隔参数。一般情况下请求体是表单数据。"
+          show-word-limit
+        />
+      </TabPane>
+      <TabPane label="添加断言" name="name4">
+        <Table
+          ref="assertTable"
+          :columns="columns"
+          :data="assert"
+          @row-click="currentAssertTableChange"
+          style="width: 100%"
+          highlight-row
+          border
+        >
+          <template slot-scope="row" slot="extractor">
+            <Select v-model="row.extractor" placeholder="请选择">
+              <Option label="delimiter" value="delimiter" />
+              <Option label="regular" value="regular" />
+            </Select>
+            <span>{{ row.extractor }}</span>
+          </template>
+          <template slot-scope="row" slot="expression">
+            <Input v-model="row.expression" size="small" placeholder="请输入内容" />
+            <span>{{ row.expression }}</span>
+          </template>
+          <template slot-scope="row" slot="comparator">
+            <Select v-model="row.comparator" placeholder="请选择">
+              <Option label="等于" value="equal" />
+              <Option label="不等于" value="not_equal" />
+              <Option label="包含" value="contain" />
+              <Option label="不包含" value="not_contain" />
+              <Option label="大于" value="greater" />
+              <Option label="大于等于" value="not_less" />
+              <Option label="小于" value="less" />
+              <Option label="小于等于" value="not_greater" />
+            </Select>
+            <span>{{ row.comparator }}</span>
+          </template>
+          <template slot-scope="row" slot="expected">
+            <Input v-model="row.expected" size="small" placeholder="请输入内容" />
+            <span>{{ row.expected }}</span>
+          </template>
+          <template slot-scope="row" slot="convertor">
+            <Select v-model="row.convertor" placeholder="请选择">
+              <Option label="string" value="str" />
+              <Option label="int" value="int" />
+              <Option label="float" value="float" />
+              <Option label="boolean" value="boolean" />
+            </Select>
+            <span>{{ row.convertor }}</span>
+          </template>
+          <template slot-scope="row" slot="action">
+            <Button @click="addAssertTableRow(row)" size="small" type="primary" class="mr20">添加</Button>
+            <Poptip title="确定删除吗？" placement="left">
+              <Button size="small" type="error">删除</Button>
+              <div slot="content">
+                <Button
+                  @click="deleteAssertTableRow(row)"
+                  size="small"
+                  type="primary"
+                  class="mr20"
+                >确定</Button>
+                <Button @click="deleteAssertTableRow(row)" size="small" type="error">取消</Button>
+              </div>
+            </Poptip>
+          </template>
+        </Table>
+      </TabPane>
       <TabPane label="提取响应" name="name5">标签五的内容</TabPane>
     </Tabs>
     <h2 class="pt40 pb10">Response</h2>
@@ -32,226 +126,6 @@
       <TabPane label="响应头" name="name2">标签二的内容</TabPane>
       <TabPane label="响应Cookie" name="name3">标签三的内容</TabPane>
     </Tabs>
-    <!-- <Row>
-      <Col :span="10">
-        <el-input
-          v-model="host"
-          placeholder="https://github.com"
-          class="input-with-select"
-          clearable
-        >
-          <template slot="prepend">
-            <el-select
-              slot="prepend"
-              @change="selectMethod"
-              v-model="method"
-              placeholder="请求方法"
-              style="width:120px;"
-              clearable
-            >
-              <el-option v-for="m in methods" :key="m" :label="m" :value="m" />
-            </el-select>
-          </template>
-        </el-input>
-      </Col>
-      <Col :span="12">
-        <el-input v-model="path" placeholder="/taoyanli0808/clover" clearable />
-      </Col>
-      <Col :span="2" style="text-align: right;">
-        <el-button @click="dialogSubmitFormVisible=true" type="primary">保存</el-button>
-      </Col>
-    </Row>
-    <Row>
-      <h1>Request</h1>
-    </Row>-->
-    <!-- <Row :gutter="20">
-      <el-tabs v-model="activeName">
-        <el-tab-pane label="请求头信息" name="first">
-          <el-input
-            v-model="header"
-            :autosize="minsize"
-            type="textarea"
-            placeholder="请输入请求头信息,key:value形式，使用换行分隔参数。"
-            show-word-limit
-          />
-        </el-tab-pane>
-        <el-tab-pane label="请求参数" name="second">
-          <el-input
-            v-model="params"
-            :autosize="minsize"
-            type="textarea"
-            placeholder="请输入请求参数,key:value形式，使用换行分隔参数。一般情况下请求参数会拼接成url，例如http://52clover.cn/s?a=1&b=2"
-            show-word-limit
-          />
-        </el-tab-pane>
-        <el-tab-pane label="请求体" name="third">
-          <el-select v-model="body.mode" placeholder="请选择">
-            <el-option
-              v-for="type in bodyType"
-              :key="type.value"
-              :label="type.label"
-              :value="type.value"
-            />
-          </el-select>
-          <el-input
-            v-model="body.data"
-            :autosize="minsize"
-            type="textarea"
-            placeholder="请输入请求体,key:value形式，使用换行分隔参数。一般情况下请求体是表单数据。"
-            show-word-limit
-          />
-        </el-tab-pane>
-        <el-tab-pane label="添加断言" name="fourth">
-          <el-table
-            ref="assertTable"
-            :data="assert"
-            @row-click="currentAssertTableChange"
-            class="tb-edit"
-            style="width: 100%"
-            highlight-current-row
-            border
-          >
-            <el-table-column label="EXTRACTOR" min-width="16%" align="left">
-              <template scope="scope">
-                <el-select v-model="scope.row.extractor" placeholder="请选择">
-                  <el-option label="delimiter" value="delimiter" />
-                  <el-option label="regular" value="regular" />
-                </el-select>
-                <span>{{ scope.row.extractor }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="EXPRESSION" min-width="17%" align="left">
-              <template scope="scope">
-                <el-input v-model="scope.row.expression" size="small" placeholder="请输入内容" />
-                <span>{{ scope.row.expression }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="COMPARATOR" min-width="16%" align="left">
-              <template scope="scope">
-                <el-select v-model="scope.row.comparator" placeholder="请选择">
-                  <el-option label="等于" value="equal" />
-                  <el-option label="不等于" value="not_equal" />
-                  <el-option label="包含" value="contain" />
-                  <el-option label="不包含" value="not_contain" />
-                  <el-option label="大于" value="greater" />
-                  <el-option label="大于等于" value="not_less" />
-                  <el-option label="小于" value="less" />
-                  <el-option label="小于等于" value="not_greater" />
-                </el-select>
-                <span>{{ scope.row.comparator }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="EXPECTED" min-width="16%" align="left">
-              <template scope="scope">
-                <el-input v-model="scope.row.expected" size="small" placeholder="请输入内容" />
-                <span>{{ scope.row.expected }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="CONVERTOR" min-width="16%" align="left">
-              <template scope="scope">
-                <el-select v-model="scope.row.convertor" placeholder="请选择">
-                  <el-option label="string" value="str" />
-                  <el-option label="int" value="int" />
-                  <el-option label="float" value="float" />
-                  <el-option label="boolean" value="boolean" />
-                </el-select>
-                <span>{{ scope.row.convertor }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" align="center" min-width="16%" fixed="right">
-              <template scope="scope">
-                <el-button
-                  @click="addAssertTableRow(scope.$index, scope.row)"
-                  size="small"
-                  type="primary"
-                >添加</el-button>
-                <el-button
-                  @click="deleteAssertTableRow(scope.$index, scope.row)"
-                  size="small"
-                  type="danger"
-                >删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="提取响应" name="five">
-          <el-table
-            ref="extractTable"
-            :data="extract"
-            class="tb-edit"
-            style="width: 100%"
-            highlight-current-row
-            border
-          >
-            <el-table-column label="SELECTOR" min-width="25%" align="left">
-              <template scope="scope">
-                <el-select v-model="scope.row.selector" placeholder="请选择">
-                  <el-option
-                    v-for="item in selectors"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  />
-                </el-select>
-                <span>{{ scope.row.selector }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="EXPRESSION" min-width="25%" align="left">
-              <template scope="scope">
-                <el-input v-model="scope.row.expression" size="small" placeholder="请输入内容" />
-                <span>{{ scope.row.expression }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="VARIABLE" min-width="25%" align="left">
-              <template scope="scope">
-                <el-input v-model="scope.row.variable" size="small" placeholder="请输入内容" />
-                <span>{{ scope.row.variable }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="操作" min-width="25%" align="center">
-              <template scope="scope">
-                <el-button
-                  @click="addExtractTableRow(scope.$index, scope.row)"
-                  size="small"
-                  type="primary"
-                >添加</el-button>
-                <el-button
-                  @click="deleteExtractTableRow(scope.$index, scope.row)"
-                  size="small"
-                  type="danger"
-                >删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </el-tab-pane>
-      </el-tabs>
-    </Row>
-    <Row>
-      <h1>Response</h1>
-    </Row>
-    <Row>
-      <el-tabs v-model="activeResponseTab">
-        <el-tab-pane label="响应体" name="responseBody">
-          <pre><code>{{ response.json || response.content }}</code></pre>
-        </el-tab-pane>
-        <el-tab-pane label="响应头" name="responseHeader">
-          <pre><code>{{ response.header }}</code></pre>
-        </el-tab-pane>
-        <el-tab-pane label="响应Cookie" name="responseCookie">Cookie</el-tab-pane>
-      </el-tabs>
-    </Row>
-    <el-dialog :visible.sync="dialogSubmitFormVisible" title="提交接口">
-      <TeamProjectCascader v-on:selectedTeamProject="selectedTeamProject" />
-      <el-form>
-        <el-form-item label="用例名称">
-          <el-input v-model="name" autocomplete="off" />
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogSubmitFormVisible = false">取消</el-button>
-        <el-button @click="submit" type="primary">确定</el-button>
-      </div>
-    </el-dialog>-->
   </div>
 </template>
 
@@ -301,20 +175,67 @@ export default {
         mode: 'raw',
         data: ''
       },
-      assert: [{
-        extractor: '',
-        expression: '',
-        comparator: '',
-        convertor: '',
-        expected: ''
-      }],
+      assert: [
+        {
+          extractor: '',
+          expression: '',
+          comparator: '',
+          convertor: '',
+          expected: ''
+        },
+        {
+          extractor: '',
+          expression: '',
+          comparator: '',
+          convertor: '',
+          expected: ''
+        }
+      ],
       extract: [{
         selector: '',
         expression: '',
         variable: ''
       }],
       minsize: { minRows: 6 },
-      dialogSubmitFormVisible: false
+      dialogSubmitFormVisible: false,
+      columns: [
+        {
+          title: 'EXTRACTOR',
+          slot: 'extractor',
+          minWidth: 150,
+          align: 'center'
+        },
+        {
+          title: 'EXPRESSION',
+          slot: 'expression',
+          minWidth: 150,
+          align: 'center'
+        },
+        {
+          title: 'COMPARATOR',
+          slot: 'comparator',
+          minWidth: 150,
+          align: 'center'
+        },
+        {
+          title: 'EXPECTED',
+          slot: 'expected',
+          minWidth: 150,
+          align: 'center'
+        },
+        {
+          title: 'CONVERTOR',
+          slot: 'convertor',
+          minWidth: 150,
+          align: 'center'
+        },
+        {
+          title: '操作',
+          slot: 'action',
+          minWidth: 150,
+          align: 'center'
+        }
+      ]
     }
   },
   methods: {
@@ -324,7 +245,7 @@ export default {
     },
     selectMethod (value) {
       this.method = value
-    }
+    },
     // addHeaderTableRow (index, row) {
     //   this.header.push({
     //     key: '',
@@ -373,8 +294,10 @@ export default {
     //     })
     //   }
     // },
-    // currentAssertTableChange (row, event, column) {
-    // },
+    currentAssertTableChange (row, index) {
+      console.log('---- row :', row)
+      console.log('---- index :', index)
+    }
     // addAssertTableRow (index, row) {
     //   this.assert.push({
     //     extractor: '',
